@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Web Vulnerability Scanner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #f0f2f5;
+      --text-color: #222;
+      --box-color: white;
+      --primary: #0066cc;
+      --primary-hover: #004b99;
+      --alert-success: #d4edda;
+      --alert-error: #f8d7da;
+      --font-mono: 'Courier New', monospace;
+    }
+
+    body.dark {
+      --bg-color: #1e1e2f;
+      --text-color: #f0f0f0;
+      --box-color: #2c2f45;
+      --primary: #3498db;
+      --primary-hover: #1f6699;
+      --alert-success: #225533;
+      --alert-error: #662222;
+    }
+
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      background: var(--box-color);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--primary);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: var(--primary-hover);
+    }
+
+    .alert {
+      padding: 16px;
+      border-radius: 6px;
+      margin-top: 20px;
+      font-size: 15px;
+    }
+
+    .alert.success {
+      background: var(--alert-success);
+      color: white;
+    }
+
+    .alert.error {
+      background: var(--alert-error);
+      color: white;
+    }
+
+    .results {
+      background: #f9f9f9;
+      padding: 16px;
+      border-radius: 10px;
+      font-family: var(--font-mono);
+      white-space: pre-wrap;
+      margin-top: 20px;
+      border: 1px solid #ccc;
+    }
+
+    .download-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .download-buttons a {
+      background: #28a745;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .download-buttons a:hover {
+      background: #218838;
+    }
+
+    @media (max-width: 600px) {
+      .download-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      button {
+        font-size: 14px;
+      }
+    }
+
+    .toggle-dark {
+      text-align: right;
+      margin-bottom: 10px;
+    }
+
+    .spinner {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .spinner.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="toggle-dark">
+      <label>
+        <input type="checkbox" id="darkToggle" onchange="toggleDarkMode()"> 🌙 Dark Mode
+      </label>
+    </div>
+
+    <h1>🛡️ Web Vulnerability Scanner</h1>
+
+    <form method="POST" onsubmit="showSpinner()">
+      <input type="text" name="url" placeholder="Enter URL (e.g. http://testphp.vulnweb.com)" required />
+      <button type="submit">🔍 Start Scan</button>
+    </form>
+
+    <div class="spinner" id="loadingSpinner">
+      <img src="https://i.gifer.com/ZKZg.gif" alt="Loading..." width="60"/>
+      <p>Scanning in progress. Please wait...</p>
+    </div>
+
+    {% if message %}
+      <div class="alert {{ message_type }}">{{ message }}</div>
+    {% endif %}
+
+    {% if results %}
+      <div class="results">
+        {{ results }}
+      </div>
+
+      <div class="download-buttons">
+        <a href="/download/html" target="_blank">📄 Download HTML Report</a>
+        <a href="/download/pdf" target="_blank">📄 Download PDF Report</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <script>
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark');
+    }
+
+    function showSpinner() {
+      document.getElementById('loadingSpinner').classList.add('show');
+    }
+  </script>
+</body>
+</html>
+

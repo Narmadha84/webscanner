@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Web Vulnerability Scanner</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --bg: #f9f9fb;
+      --box: #ffffff;
+      --text: #222;
+      --success: #d1fae5;
+      --error: #fee2e2;
+    }
+
+    body.dark {
+      --primary: #7c3aed;
+      --primary-dark: #5b21b6;
+      --bg: #18181b;
+      --box: #27272a;
+      --text: #f4f4f5;
+      --success: #064e3b;
+      --error: #7f1d1d;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 0;
+      transition: 0.3s ease;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background: var(--box);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .toggle-dark {
+      text-align: right;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 25px;
+      font-size: 17px;
+    }
+
+    .subtitle span {
+      color: var(--primary);
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 14px;
+      font-size: 16px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      background: #fff;
+    }
+
+    button {
+      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .alert {
+      padding: 16px;
+      border-radius: 8px;
+      font-size: 15px;
+      margin-top: 20px;
+      font-weight: 500;
+    }
+
+    .alert.success {
+      background: var(--success);
+      color: green;
+    }
+
+    .alert.error {
+      background: var(--error);
+      color: darkred;
+    }
+
+    .results {
+      background: #f0f0f0;
+      padding: 16px;
+      border-radius: 10px;
+      font-family: monospace;
+      white-space: pre-wrap;
+      margin-top: 20px;
+      border-left: 5px solid var(--primary);
+    }
+
+    .download-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      gap: 10px;
+    }
+
+    .download-buttons a {
+      background: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      text-align: center;
+      flex: 1;
+      transition: background 0.3s ease;
+    }
+
+    .download-buttons a:hover {
+      background: var(--primary-dark);
+    }
+
+    .spinner {
+      display: none;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .spinner.show {
+      display: block;
+    }
+
+    @media (max-width: 600px) {
+      .download-buttons {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="toggle-dark">
+      <label>
+        <input type="checkbox" onchange="document.body.classList.toggle('dark')"> 🌙 Dark Mode
+      </label>
+    </div>
+
+    <h1>🛡️ Web App Vulnerability Scanner</h1>
+    <p class="subtitle">
+      Developed by <span>Narmadha K R</span><br>
+      <small>Lovely Professional University</small>
+    </p>
+
+    <form method="POST" onsubmit="showSpinner()">
+      <input type="text" name="url" placeholder="Enter full website URL" required />
+      <button type="submit">🚀 Start Scan</button>
+    </form>
+
+    <div id="spinner" class="spinner">
+      <p>⏳ Scanning... Please wait.</p>
+    </div>
+
+    {% if message %}
+      <div class="alert {{ message_type }}">{{ message }}</div>
+    {% endif %}
+
+    {% if results %}
+      <div class="results">{{ results }}</div>
+      <div class="download-buttons">
+        <a href="/download/html" target="_blank">📄 Download HTML</a>
+        <a href="/download/pdf" target="_blank">📄 Download PDF</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <script>
+    function showSpinner() {
+      document.getElementById('spinner').classList.add("show");
+    }
+  </script>
+</body>
+</html>

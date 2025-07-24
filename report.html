@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head><title>Scan Report</title>
+<style>
+body {font-family: Arial; padding:20px;}
+h1 {color:#333;}
+pre {background:#f4f4f4; padding:15px; border:1px solid #ccc;}
+</style></head>
+<body>
+<h1>Web Vulnerability Scan Report</h1>
+<p><strong>Date:</strong> 2025-07-24 14:35:18</p>
+<h2>Results:</h2><pre>[SQLi] Found at: http://127.0.0.1:5000
+Payload: ' OR 1=1 --
+
+[SQLi] Found at: http://127.0.0.1:5000
+Payload: ' OR '1'='1
+
+[SQLi] Found at: http://127.0.0.1:5000
+Payload: '; DROP TABLE users; --
+
+[SQLi] Found at: http://127.0.0.1:5000
+Payload: ' UNION SELECT NULL --
+
+[SQLi] Found at: http://127.0.0.1:5000
+Payload: ' OR 1=1#
+
+[CSRF] Missing token in form #1 at http://127.0.0.1:5000
+
+</pre>
+</body></html>
