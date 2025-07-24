@@ -16,7 +16,7 @@ A lightweight web vulnerability scanner built using Python and Flask. It detects
 
 ## 🚀 How to Run
 
-1. Clone or unzip the project:
+1. Clone the project:
    ```bash
-   git clone https://github.com/yourusername/webscanner.git
+   git clone https://github.com/Narmadha84/webscanner.git
    cd webscanner
